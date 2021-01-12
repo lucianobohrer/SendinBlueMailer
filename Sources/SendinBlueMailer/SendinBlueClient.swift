@@ -9,10 +9,11 @@ public final class SendInBlueClient {
     let apiKey: String
     let httpClient: HTTPClient
     
-    enum HeaderName {
+    enum Constants {
         static let contentType = "Content-Type"
         static let accept = "Accept"
         static let apiKey = "api-key"
+        static let jsonTypeApp = "application/json"
     }
     
     public init(httpClient: HTTPClient, apiKey: String) {
@@ -23,9 +24,9 @@ public final class SendInBlueClient {
     public func send(email: SIBEmail, on eventLoop: EventLoop) throws -> EventLoopFuture<Void> {
             
         var headers = HTTPHeaders()
-        headers.add(name: HeaderName.apiKey, value: apiKey)
-        headers.add(name: HeaderName.contentType, value: "application/json")
-        headers.add(name: HeaderName.accept, value: "application/json")
+        headers.add(name: Constants.apiKey, value: apiKey)
+        headers.add(name: Constants.contentType, value: Constants.jsonTypeApp)
+        headers.add(name: Constants.accept, value: Constants.jsonTypeApp)
  
         let bodyData = try JSONEncoder().encode(email)
         let bodyString = String(decoding: bodyData, as: UTF8.self)
